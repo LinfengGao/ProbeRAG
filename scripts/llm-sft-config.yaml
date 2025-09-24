@@ -1,0 +1,38 @@
+model_config:
+  base_model_name_or_path: checkpoints/CANOE/CANOE-Mistral-7B-Instruct-v0.3-back
+  lora_checkpoint_path: checkpoints/CANOE/CANOE-Mistral-7B-Instruct-v0.3-lora
+data_config:
+  train_data_file: data/deprecated/mistral-7b-faitheval.jsonl
+  train_set_ratio: 0.9
+
+tokenizer_config:
+  truncation: True
+  max_length: 512
+  padding: True
+
+lora_config:
+  r: 16
+  alpha: 16
+  dropout: 0
+  target_modules: ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"]
+  bias: none
+  task_type: CAUSAL_LM
+
+batch_size: 1
+gradient_accumulation_steps: 1
+warmup_ratio: 0.1
+num_train_epochs: 1
+learning_rate: 0.00003
+start_eval_step: 10
+logging_steps: 1
+eval_steps: 400
+save_steps: 400
+weight_decay: 0.1
+clip_grad: 1.0
+beta1: 0.1
+beta2: 0.1
+fp16: False
+output_dir: checkpoints/CANOE/CANOE-Mistral-7B-Instruct-v0.3-lora-3
+group_by_length: False
+train_on_inputs: False
+resume_from_checkpoint: False

@@ -1,0 +1,8 @@
+.vscode
+checkpoints
+deprecated
+data
+experiments
+logs
+**/__pycache__
+**/.env
