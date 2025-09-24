@@ -4,6 +4,8 @@ Code repository for paper: Focusing on What Matters: Probing Latent Conflict in 
 
 This repository provides an evaluation framework for paper: Focusing on What Matters: Probing Latent Conflict in Retrieval-Augmented Generation, focusing on **knowledge intensive QA tasks**. The core method is based on **CLEAR**, with comparisons to several baseline and alternative approaches.
 
+![framework](images/framework.png)
+
 ## Features
 
 * **Automated QA Evaluation**
