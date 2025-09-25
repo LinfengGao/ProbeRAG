@@ -1,4 +1,4 @@
-# CLEAR: Conflict-Localized and Enhanced Attention for RAG
+# Probing Latent Knowledge Conflict for Faithful Retrieval-Augmented Generation
 
 Code repository for paper: Probing Latent Knowledge Conflict for Faithful Retrieval-Augmented Generation
 
