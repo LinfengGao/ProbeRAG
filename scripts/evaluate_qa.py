@@ -230,7 +230,7 @@ if __name__ == "__main__":
                 elif method == "CANOE":
                     model_path = f"checkpoints/CANOE/CANOE-{model_name}"
                 else:
-                    model_path = f"/home/glf/data/models/{model_name}"
+                    model_path = f"models/{model_name}"
                 
                 print(model_path)
                 accelerator, model, tokenizer = load_model_and_tokenizer(

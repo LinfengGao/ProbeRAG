@@ -36,17 +36,13 @@ def load_model_and_tokenizer(model_name_or_path) -> Tuple[Accelerator, AutoModel
 
 
 def plot_filled_ellipse(points, ax, color, scale=1.0, alpha=0.2):
-    """
-    用协方差构造覆盖性更强的椭圆，填充颜色为半透明
-    scale 控制椭圆大小，scale=3 约等于覆盖99%点
-    """
     mean = points.mean(axis=0)
     cov = np.cov(points, rowvar=False)
-    if cov.shape != (2, 2):  # 防止退化
+    if cov.shape != (2, 2):
         return
     vals, vecs = np.linalg.eigh(cov)
     angle = np.degrees(np.arctan2(*vecs[:, 0][::-1]))
-    width, height = 2 * scale * np.sqrt(vals)  # 扩展至3-sigma覆盖区
+    width, height = 2 * scale * np.sqrt(vals)
     ellipse = Ellipse(xy=mean, width=width, height=height, angle=angle,
                       edgecolor=color, facecolor=color, lw=1.5, alpha=alpha)
     ax.add_patch(ellipse)
@@ -60,10 +56,6 @@ def tsne_visualize(
         ylabel="t-SNE Component 2",
         save_path="tsne_visualization.png"
     ):
-    """
-    使用t-SNE将高维向量映射到二维空间并进行美观可视化（带椭圆填充）
-    """
-    # 设置全局字体为 Times New Roman
     mpl.rcParams['font.family'] = 'Times New Roman'
     if isinstance(X, torch.Tensor):
         X = X.detach().to(torch.float).cpu().numpy()
@@ -94,7 +86,6 @@ def tsne_visualize(
                 alpha=0.9,
                 edgecolors='none'
             )
-            # 画填充椭圆
             plot_filled_ellipse(class_points, ax, color=color, scale=1.5, alpha=0.25)
 
         ax.legend(fontsize=23, loc='lower right')
@@ -115,17 +106,14 @@ def attention_weights_visualize(attention_weights, tokens, output_path="attentio
     fig, ax = plt.subplots(figsize=(16, 12))
     if type(attention_weights) == torch.Tensor:
         attention_weights = attention_weights.detach().to(torch.float).cpu().numpy()
-    cax = ax.matshow(attention_weights, cmap='viridis')  # 使用viridis颜色映射
+    cax = ax.matshow(attention_weights, cmap='viridis')
     fig.colorbar(cax)
 
-    # 设置x轴和y轴的刻度位置
-    ax.set_xticks(np.arange(len(tokens)))  # 设置x轴刻度位置
-    ax.set_yticks(np.arange(attention_weights.shape[0]))  # 设置y轴刻度位置
+    ax.set_xticks(np.arange(len(tokens)))
+    ax.set_yticks(np.arange(attention_weights.shape[0]))
 
-    # 设置x轴和y轴的标签
-    ax.set_xticklabels(tokens, rotation=90)  # 旋转x轴标签以便更清晰
+    ax.set_xticklabels(tokens, rotation=90)
     ax.set_yticklabels([f'Head {i+1}' for i in range(attention_weights.shape[0])])
-
 
     if not os.path.exists(os.path.dirname(output_path)):
         os.makedirs(os.path.dirname(output_path), exist_ok=True)
@@ -140,16 +128,14 @@ def attention_matrix_visualize(attention_matrix, tokens, output_path="attention_
     fig, ax = plt.subplots(figsize=(25, 25))
     if type(attention_matrix) == torch.Tensor:
         attention_matrix = attention_matrix.detach().to(torch.float).cpu().numpy()
-    cax = ax.matshow(attention_matrix, cmap='viridis')  # 使用viridis颜色映射
+    cax = ax.matshow(attention_matrix, cmap='viridis')
     fig.colorbar(cax)
 
-    # 设置x轴和y轴的刻度位置
-    ax.set_xticks(np.arange(len(tokens)))  # 设置x轴刻度位置
-    ax.set_yticks(np.arange(len(tokens)))  # 设置y轴刻度位置
+    ax.set_xticks(np.arange(len(tokens)))
+    ax.set_yticks(np.arange(len(tokens)))
 
-    # 设置x轴和y轴的标签
-    ax.set_xticklabels(tokens, rotation=90)  # 旋转x轴标签以便更清晰
-    ax.set_yticklabels(tokens)  # y轴标签与x轴相同
+    ax.set_xticklabels(tokens, rotation=90)
+    ax.set_yticklabels(tokens)
 
 
     if not os.path.exists(os.path.dirname(output_path)):

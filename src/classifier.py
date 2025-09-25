@@ -77,8 +77,8 @@ def train_model(
 
 
 if __name__ == "__main__":
-    X = torch.randn(1000, 10)  # 1000 个样本，每个样本是 10 维向量
-    y = torch.randint(0, 2, (1000, 1)).float()  # 二分类标签
+    X = torch.randn(1000, 10)
+    y = torch.randint(0, 2, (1000, 1)).float()
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     
@@ -86,6 +86,6 @@ if __name__ == "__main__":
 
     trained_model.eval()
     with torch.no_grad():
-        test_X = torch.randn(10, 10).to(device)  # 10 个测试样本
+        test_X = torch.randn(10, 10).to(device)
         predictions = trained_model(test_X)
         print("Predictions:", predictions)

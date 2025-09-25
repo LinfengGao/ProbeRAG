@@ -67,7 +67,7 @@ if __name__ == "__main__":
     raw_data_path = "Context-DPO/ConFiQA"
     processed_data_path = "data/processed/ConFiQA"
 
-    model_path = "/home/glf/data/models/Qwen3-8B"
+    model_path = "models/Qwen3-8B"
     classifier_path = "checkpoints/classifier/qwen3-8b-0623.pt"
     sft_data_path = "data/sft/sft_train_qwen3_8b+1000squad.jsonl"
 

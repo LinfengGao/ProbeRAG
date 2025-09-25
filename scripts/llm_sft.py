@@ -49,7 +49,6 @@ class InstructDataset(Dataset):
             return_tensors=None,
         )
 
-        # Llama tokenizer不会在末尾自动添加eos，这里手动添加。如果长度小于max_length，则添加eos。
         if (
             result["input_ids"][-1] != self.tokenizer.eos_token_id
             and len(result["input_ids"]) < self.config.max_length
@@ -68,8 +67,6 @@ class InstructDataset(Dataset):
         input_prompt = self.tokenize(input_prompt, add_eos_token=False)
         input_len = len(input_prompt["input_ids"])
         full_prompt["labels"] = [-100] * input_len + full_prompt["input_ids"][input_len:]
-
-        # attention_mask_conflict记录哪些token在<conflict>和</conflict>之间。这些位置为1，其余为0。
 
         start_token_ids = self.tokenizer.encode(" <conflict>", add_special_tokens=False)
         end_token_ids = self.tokenizer.encode(" </conflict>\n", add_special_tokens=False)
@@ -179,10 +176,6 @@ data_collator = DataCollatorForSeq2Seq(tokenizer, padding=True)
 
 class AttentionTrainer(Trainer):
     def compute_loss(self, model, inputs, num_items_in_batch=None, return_outputs=False):
-        """
-        计算每个样本attention_mask_conflict中为1的token的平均注意力分数,
-        将这个平均注意力分数乘以一个lambda系数, 并从原始损失中加上这个值。
-        """
         attention_mask_conflict = inputs.pop("attention_mask_conflict")
         outputs = model(**inputs, output_attentions=True)
         base_loss = outputs["loss"] if isinstance(outputs, dict) else outputs[0]

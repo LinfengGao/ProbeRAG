@@ -34,7 +34,7 @@ class HiddenStateExtractor(Extrator):
                     return_dict_in_generate=True,
                 )
 
-            hidden_states = outputs.hidden_states[0][-1]  # 最后一层的hidden states: (batch_size, seq_len, hidden_size)
+            hidden_states = outputs.hidden_states[0][-1]  # hidden states: (batch_size, seq_len, hidden_size)
             last_token_hidden_states = hidden_states[:, -1, :]  # last_token_hidden_states: (batch_size, hidden_size)
 
             batched_hidden_states.append(last_token_hidden_states.cpu())
@@ -57,8 +57,8 @@ class LogitsExtractor(Extrator):
             with torch.no_grad():
                 outputs = self.model.generate(
                     **inputs,
-                    max_new_tokens=1,  # 只生成一个新token
-                    output_scores=True,  # 输出scores (logits)
+                    max_new_tokens=1,
+                    output_scores=True,
                     return_dict_in_generate=True
                 )
         
@@ -85,8 +85,8 @@ class AttentionWeightExtractor(Extrator):
                     return_dict_in_generate=True,
                 )
 
-            first_layer_attentions = outputs.attentions[0][0]  # 第一层的注意力权重
-            last_token_attentions = first_layer_attentions[:, :, -1, :]  # 最后一个token的注意力权重 (batch_size, num_heads, seq_len)
+            first_layer_attentions = outputs.attentions[0][0]
+            last_token_attentions = first_layer_attentions[:, :, -1, :]
             for i in range(last_token_attentions.shape[0]):
                 batched_attention_weights.append(last_token_attentions[i].squeeze(0).cpu())  # (num_heads, seq_len)
 
@@ -111,11 +111,11 @@ class AttentionWeightExtractor(Extrator):
                     return_dict_in_generate=True,
                 )
 
-            last_layer_attentions = outputs.attentions[-1][0]  # 最后一层的注意力权重
-            # attention_matrix = last_layer_attentions[:, head_idx, :, :]  # 获取第head_idx个头的注意力权重 (batch_size, seq_len, seq_len)
+            last_layer_attentions = outputs.attentions[-1][0]
+            # attention_matrix = last_layer_attentions[:, head_idx, :, :]
             attention_matrix = sum(
                 last_layer_attentions[:, i, :, :] for i in range(last_layer_attentions.shape[1])
-            )/ last_layer_attentions.shape[1]  # 平均所有头的注意力权重 (batch_size, seq_len, seq_len)
+            )/ last_layer_attentions.shape[1]
             for i in range(attention_matrix.shape[0]):
                 batched_attention_weights.append(attention_matrix[i].squeeze(0).cpu())  # (seq_len, seq_len)
 
@@ -132,12 +132,10 @@ class PerplexityExtractor(Extrator):
         for prompt in tqdm(prompts, desc="Extracting Perplexity", disable=not show_progress):
             inputs = self.tokenizer(prompt, return_tensors="pt", padding=True).to(self.accelerator.device)
 
-            # 计算负对数似然损失
             with torch.no_grad():
                 outputs = self.model(inputs["input_ids"], labels=inputs["input_ids"])
                 loss = outputs.loss
             
-            # 计算困惑度
             perplexity = torch.exp(loss)
             perplexities.append(perplexity.item())
 
@@ -145,7 +143,7 @@ class PerplexityExtractor(Extrator):
 
 
 if __name__ == "__main__":
-    model_path = "/home/glf/data/models/Mistral-7B-Instruct-v0.3"
+    model_path = "models/Mistral-7B-Instruct-v0.3"
 
     accelerator, model, tokenizer = load_model_and_tokenizer(model_path)
 
@@ -172,10 +170,10 @@ if __name__ == "__main__":
     # attention_matrix, tokens = extrator.get_attention_weight_matrix(prompts, head_idx=0, batch_size=3)
     # print(attention_matrix[0].shape)  # (seq_len, seq_len)
     # print(attention_matrix[1].shape)  # (seq_len, seq_len)
-    # print(tokens[0])  # 打印第一个输入的tokens
-    # print(tokens[1])  # 打印第二个输入的tokens
+    # print(tokens[0])
+    # print(tokens[1])
 
     # Perplexity Extractor Example
     extractor = PerplexityExtractor(accelerator, model, tokenizer)
     perplexities = extractor.get_perplexity(prompts)
-    print(perplexities)  # 打印每个输入的困惑度
+    print(perplexities)

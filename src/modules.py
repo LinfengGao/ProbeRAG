@@ -102,7 +102,7 @@ class QueryStepDecomposer:
 
 
 class FactSearcher:
-    def __init__(self, model="/home/glf/data/models/all-MiniLM-L6-v2"):
+    def __init__(self, model="models/all-MiniLM-L6-v2"):
         self.model = SentenceTransformer(model)
         self.model.eval()
         self.model.to("cuda" if torch.cuda.is_available() else "cpu")
@@ -168,7 +168,7 @@ if __name__ == "__main__":
     for step in steps:
         print(f"- {step}")
 
-    facts_searcher = FactSearcher(model="/home/glf/data/models/all-MiniLM-L6-v2")
+    facts_searcher = FactSearcher(model="models/all-MiniLM-L6-v2")
     for step in steps:
         relevant_facts = facts_searcher.search_facts(step, facts, top_k=3)
         print(f"\nRelevant Facts for Step '{step}':")
@@ -176,7 +176,7 @@ if __name__ == "__main__":
             print(f"- {fact}")
 
     conflict_detector = ConflictDetector(
-        llm_model_path="/home/glf/data/models/Meta-Llama-3.1-8B-Instruct", 
+        llm_model_path="models/Meta-Llama-3.1-8B-Instruct", 
         classifier_path="output/classifier/llama3-8b-classifier.pt"
     )
     facts_with_conflicts = conflict_detector.detect_conflicts(facts)

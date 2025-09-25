@@ -105,7 +105,7 @@ def evaluating(model_path, classifier_path, data_path):
 
 if __name__ == "__main__":
 
-    model_path = "/home/glf/data/models/Qwen3-8B"
+    model_path = "models/Qwen3-8B"
     processed_data_path = "data/processed/classifier"
     classifier_path = "checkpoints/classifier/qwen3-8b-0623.pt"
     log_dir = "logs/classifier_training_logs/0623/qwen3-8b"
