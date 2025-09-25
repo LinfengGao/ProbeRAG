@@ -1,8 +1,8 @@
-# CLEAR: Conflict-Localized and Enhanced Attention for RAG
+# Probing Latent Knowledge Conflict for Faithful Retrieval-Augmented Generation
 
-Code repository for paper: Probing Latent Knowledge Conflict for Faithful Retrieval Augmented Generation
+Code repository for paper: Probing Latent Knowledge Conflict for Faithful Retrieval-Augmented Generation
 
-This repository provides an evaluation framework for paper: Probing Latent Knowledge Conflict for Faithful Retrieval Augmented Generation, focusing on **knowledge intensive QA tasks**. The core method is based on **CLEAR**, with comparisons to several baseline and alternative approaches.
+This repository provides an evaluation framework for paper: Probing Latent Knowledge Conflict for Faithful Retrieval-Augmented Generation, focusing on **knowledge intensive QA tasks**. The core method is based on **CLEAR**, with comparisons to several baseline and alternative approaches.
 
 ![framework](images/framework.png)
 
