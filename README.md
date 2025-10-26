@@ -110,3 +110,14 @@ Example output:
     }
 ]
 ```
+
+# Citation
+If you find this work helpful, please cite our paper:
+```
+@article{gao2025probing,
+  title={Probing Latent Knowledge Conflict for Faithful Retrieval-Augmented Generation},
+  author={Gao, Linfeng and Bi, Baolong and Yuan, Zheng and Wang, Le and Chen, Zerui and Wei, Zhimin and Liu, Shenghua and Zhang, Qinggang and Su, Jinsong},
+  journal={arXiv preprint arXiv:2510.12460},
+  year={2025}
+}
+```
