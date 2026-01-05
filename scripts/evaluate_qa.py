@@ -111,8 +111,8 @@ class QAEvaluator:
             device_map="auto"
         )
     
-    def evaluate(self, dataset:RAGDataset, output_file:str="output/qa_exp/file.json", method="CLEAR"):
-        if method == "CLEAR":
+    def evaluate(self, dataset:RAGDataset, output_file:str="output/qa_exp/file.json", method="ProbeRAG"):
+        if method == "ProbeRAG":
             prompts, answers = dataset.get_logic_prompts_and_answers(
                 conflict_detector=self.conflict_detector
             )
@@ -191,7 +191,7 @@ class QAEvaluator:
 
 
 if __name__ == "__main__":
-    date = "0916"
+    date = "current_time"
 
     model_dict = {
         "llama3.1-8b": "Meta-Llama-3.1-8B-Instruct",
@@ -215,7 +215,8 @@ if __name__ == "__main__":
         # "CAD",
         # "ContextDPO",
         # "CANOE",
-        "CLEAR",
+        # "ParamMute"
+        "ProbeRAG",
     ]:
         for model_short_cut, model_name in model_dict.items():
             for dataset_name, dataset in dataset_dict.items():
@@ -225,12 +226,14 @@ if __name__ == "__main__":
                     continue
                 if method == "ContextDPO":
                     model_path = f"checkpoints/Context-DPO-adapter/Context-Faithful-{model_name}/final"
-                elif method == "CLEAR":
+                elif method == "ProbeRAG":
                     model_path = f"checkpoints/conflict-aware-models/conflict-aware-{model_short_cut}/final"
+                elif method == "ParamMute":
+                    model_path = f"checkpoints/ParamMute/{model_short_cut}"
                 elif method == "CANOE":
                     model_path = f"checkpoints/CANOE/CANOE-{model_name}"
                 else:
-                    model_path = f"models/{model_name}"
+                    model_path = f"/home/glf/data/models/{model_name}"
                 
                 print(model_path)
                 accelerator, model, tokenizer = load_model_and_tokenizer(
