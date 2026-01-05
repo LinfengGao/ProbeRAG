@@ -1,8 +1,8 @@
-# Probing Latent Knowledge Conflict for Faithful Retrieval-Augmented Generation
+# Beyond Black-Box Interventions: Latent Probing for Faithful Retrieval-Augmented Generation
 
-Code repository for paper: Probing Latent Knowledge Conflict for Faithful Retrieval-Augmented Generation
+Code repository for paper: Beyond Black-Box Interventions: Latent Probing for Faithful Retrieval-Augmented Generation
 
-This repository provides an evaluation framework for paper: Probing Latent Knowledge Conflict for Faithful Retrieval-Augmented Generation, focusing on **knowledge intensive QA tasks**. The core method is based on **CLEAR**, with comparisons to several baseline and alternative approaches.
+This repository provides an evaluation framework for paper: Beyond Black-Box Interventions: Latent Probing for Faithful Retrieval-Augmented Generation, focusing on **knowledge intensive QA tasks**. The core method is called **ProbeRAG**, with comparisons to several baseline and alternative approaches.
 
 ![framework](images/framework.png)
 
@@ -18,7 +18,7 @@ This repository provides an evaluation framework for paper: Probing Latent Knowl
   Includes benchmarks such as **FaithEval**, **ConFiQA**, and **SQuAD**.
 
 * **Multiple Baselines**
-  Supports `CLEAR`, `WO-Context`, `KRE`, `OPIN`, `CANOE`, `ContextDPO`, etc.
+  Supports `ProbeRAG`, `WO-Context`, `KRE`, `OPIN`, `CANOE`, `ContextDPO`, `ParamMute` etc.
 
 ## Project Structure
 
