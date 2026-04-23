@@ -1,6 +1,6 @@
 # Beyond Black-Box Interventions: Latent Probing for Faithful Retrieval-Augmented Generation
 
-Code repository for paper: Beyond Black-Box Interventions: Latent Probing for Faithful Retrieval-Augmented Generation
+[ACL'26 Findings] Official code for: "Beyond Black-Box Interventions: Latent Probing for Faithful Retrieval-Augmented Generation"
 
 This repository provides an evaluation framework for paper: Beyond Black-Box Interventions: Latent Probing for Faithful Retrieval-Augmented Generation, focusing on **knowledge intensive QA tasks**. The core method is called **ProbeRAG**, with comparisons to several baseline and alternative approaches.
 
